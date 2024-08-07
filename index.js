@@ -22,6 +22,7 @@ function menu() {
         case '1':
             if (users.length == 0) {
                 console.log('Nada encontrado!')
+                menu()
             } else {
                 listarUsers();
                 menu();
@@ -29,25 +30,33 @@ function menu() {
             break;
         case '2':
             nome = prompt('nome: ');
+            let telefones = [];
+            let telefone;
+            while ((telefone = prompt('Telefone (ou deixe em branco para sair): '))) {
+                telefones.push(telefone);
+            }
             email = prompt('email: ');
-            numero = prompt('Número: ');
-            adicionarUser(({ nome, email, numero }));
+            adicionarUser(({ nome, email, telefones }));
             console.log('Usuário adicionado com sucesso!');
             menu();
             break;
         case '3':
             listarUsers();
-            index = parseInt(prompt('Qual você deseja atualizar?: '))
-            let novoNome = prompt('Digite o novo nome: ')
-            let novoEmail = prompt('Digite a novo email: ')
-            let novoNumero = prompt('Digite o novo número: ')
-            atualizarUser(index, { nome: novoNome, email: novoEmail, numero: novoNumero })
+            index = parseInt(prompt('Qual você deseja atualizar?: '));
+            let novoNome = prompt('Nome: ')
+            let novosTelefones = [];
+            let telefoneNovo;
+            while ((telefoneNovo = prompt('Telefone (ou deixe em branco para sair): '))) {
+                novosTelefones.push(telefoneNovo);
+            }
+            let novoEmail = prompt('email: ');
+            atualizarUser(index, { id: index, nome: novoNome, email: novoEmail, telefones: telefoneNovo })
             console.log('Atualizado com sucesso!!')
             menu()
             break;
         case '4':
             listarUsers()
-            let id = parseInt(prompt('Número do usuário a remover: '))
+            let id = parseInt(prompt('Número do id do usuário a remover: '))
             removerUser(id);
             console.log('Removido com sucesso!!')
             menu();
@@ -55,5 +64,8 @@ function menu() {
         case '5':
             console.log('Saindo do programa....')
             break;
+        default:
+            console.log('OPÇÃO INVÁLIDA')
+            menu()
     }
 }
